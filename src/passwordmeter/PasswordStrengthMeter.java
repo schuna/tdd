@@ -2,6 +2,7 @@ package passwordmeter;
 
 public class PasswordStrengthMeter {
     public PasswordStrength measurePasswordStrength(String password) {
+        PasswordStrength passwordStrength;
 
         int count = 0;
 
@@ -11,11 +12,20 @@ public class PasswordStrengthMeter {
 
         if (measureUpperCaseCriteria(password)) count++;
 
-        if (count <= 1) return PasswordStrength.WEAK;
+        switch (count) {
+            case 3:
+                passwordStrength = PasswordStrength.STRONG;
+                break;
+            case 2:
+                passwordStrength = PasswordStrength.NORMAL;
+                break;
+            default:
+                passwordStrength = PasswordStrength.WEAK;
+                break;
 
-        if (count == 2) return PasswordStrength.NORMAL;
+        }
 
-        return PasswordStrength.STRONG;
+        return passwordStrength;
 
     }
 
