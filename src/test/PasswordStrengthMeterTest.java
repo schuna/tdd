@@ -22,6 +22,13 @@ public class PasswordStrengthMeterTest {
         assertPasswordStrengthEquals(password, PasswordStrength.NORMAL);
     }
 
+    @DisplayName("한개 이하를 만족하는 경우")
+    @ParameterizedTest(name = "[{index}] password = {0}")
+    @ValueSource(strings = {"kjid", "A@GHK", "1@34567"})
+    void meetOneOrBelowCriteriaThenNormalTest(String password) {
+        assertPasswordStrengthEquals(password, PasswordStrength.WEAK);
+    }
+
     private void assertPasswordStrengthEquals(String password, PasswordStrength expected) {
         PasswordStrengthMeter passwordstrengthmeter = new PasswordStrengthMeter();
         PasswordStrength result = passwordstrengthmeter.measurePasswordStrength(password);

@@ -3,27 +3,45 @@ package passwordmeter;
 public class PasswordStrengthMeter {
     public PasswordStrength measurePasswordStrength(String password) {
 
-        boolean meetLengthCriteria = password.length() >= 8;
+        int count = 0;
 
-        boolean meetNumberCriteria = false;
+        if (measureLengthCriteria(password)) count++;
+
+        if (measureNumberCriteria(password)) count++;
+
+        if (measureUpperCaseCriteria(password)) count++;
+
+        if (count <= 1) return PasswordStrength.WEAK;
+
+        if (count == 2) return PasswordStrength.NORMAL;
+
+        return PasswordStrength.STRONG;
+
+    }
+
+    boolean measureLengthCriteria(String password) {
+        return password.length() >= 8;
+    }
+
+    boolean measureNumberCriteria(String password) {
+
         for (char ch : password.toCharArray()) {
             if ('0' <= ch && ch <= '9') {
-                meetNumberCriteria = true;
-                break;
+                return true;
             }
         }
+        return false;
 
-        boolean meetUpperCaseCriteria = false;
+    }
+
+    boolean measureUpperCaseCriteria(String password) {
+
         for (char ch : password.toCharArray()) {
             if (Character.isUpperCase(ch)) {
-                meetUpperCaseCriteria = true;
-                break;
+                return true;
             }
         }
-
-        if (meetLengthCriteria && meetNumberCriteria && meetUpperCaseCriteria) {
-            return PasswordStrength.STRONG;
-        }
-        return PasswordStrength.NORMAL;
+        return false;
     }
+
 }
