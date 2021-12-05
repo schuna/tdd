@@ -20,6 +20,12 @@ public class PasswordStrengthMeterTest {
         assertPasswordStrengthEquals("ab2D1!fg", PasswordStrength.STRONG);
     }
 
+    @DisplayName("길이와 숫자, 두가지 조건을 만족하는 경우")
+    @Test
+    void meetLengthAndNumberCriteriaThenNormalTest() {
+        assertPasswordStrengthEquals("ab2d1!fg", PasswordStrength.NORMAL);
+    }
+
     private void assertPasswordStrengthEquals(String password, PasswordStrength expected){
         PasswordStrengthMeter passwordstrengthmeter = new PasswordStrengthMeter();
         PasswordStrength result = passwordstrengthmeter.measurePasswordStrength(password);
